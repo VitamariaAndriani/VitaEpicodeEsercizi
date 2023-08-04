@@ -1,0 +1,37 @@
+create table Aereoporto (
+  città varchar(255),
+  nazione varchar(255),
+  numero_piste tinyint unsigned,
+  primary key (città));
+
+
+create table Aereo (
+    tipo_aereo varchar(255),
+    num_passeggeri smallint unsigned,
+    qta_merci int unsigned,
+    primary key (tipo_aereo));
+    
+    
+ create table volo (
+      id_volo char(255),
+      giorno_sett enum("lunedi","Martedi","Mercoledi","Giovedì","Venerdì","Sabato","Domenica"),
+      città_part varchar(255),
+      ora_part time,
+      città_arrivo varchar(255),
+      ora_arrivo time,
+      tipo_aereo varchar(255),
+      primary key (id_volo),
+      constraint FK_Aereo_Volo foreign key (tipo_aereo) references Aereo(tipo_aereo) on update cascade on delete no action, 
+      constraint FK_Città_Part_Aereoporto_Volo foreign key (città_part) references Aereporto(città) on update cascade on delete no action,
+      constraint FK_Città_Arrivo_Aereoporto_Volo foreign key (città_arrivo) references Aereoporto(città) on update cascade on delete no action);
+      
+      
+select città from aereo where num_piste is null;
+
+select tipo_aereo from volo where città_part="Torino";
+
+select città_part from volo where città_arrivo="Bologna";
+
+select città_part,città_arrivo from volo where id_volo="Az274";
+
+select tipo_aereo,giorno_part,ora_part from volo where città_part like "B%O%" AND  città_arrivo like "E%A%";
